@@ -13,6 +13,10 @@ connectToMongo(); // connect to db
 const authJwt = require('./helpers/jwt.js');
 const errorHandler = require('./helpers/error-handler.js');
 
+// CDN CSS
+const CSS_URL =
+  "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui.min.css";
+
 // initilizing swager doc
 // const YAML = require('yamljs')
 // const swaggerJsDocs = YAML.load('./Doc/api-doc.yaml')
@@ -57,7 +61,14 @@ const options = {
     apis: ["./routes/*.js"]
 }
 const swaggerJsDocs = swaggerJSDoc(options)
-app.use(`/api-docs`, swaggerUi.serve, swaggerUi.setup(swaggerJsDocs))
+app.use(`/api-docs`, 
+        swaggerUi.serve, 
+        swaggerUi.setup(
+            swaggerJsDocs, 
+            { 
+                customCssUrl: CSS_URL 
+            }
+        ))
 
 
 // middelware

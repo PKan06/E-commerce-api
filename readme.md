@@ -72,10 +72,5 @@ POST     /e-shopping/users/login
 
 
 ```
-visit my swagger docs for E-Commerce Web API: /api-docs/ with the following steps 
-
-step-1) clone the repository
-step-2) start local server at http://localhost:5000
-step-3) visit http://localhost:5000/api-docs/
-step-4) now you can use my vercel server to test the api
+visit my swagger detail docs for E-Commerce Web API: https://e-commerce-api-nu.vercel.app/api-docs/
 ```

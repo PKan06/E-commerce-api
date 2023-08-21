@@ -109,9 +109,37 @@ const uploadOptions = multer({ storage: storage })
   *   name: Products
   *   description: The products API
   */
-
  
-// get only specific categories of product insted of whole product list 
+ /**
+  * @openapi
+  * /e-shopping/products:
+  *   get:
+  *      summary: Get the categories by ID 
+  *      description: This api will find the items in Category Schema by given id and return category list if that id is return. As there require no authentication in fatching the cateories.So no token required
+  *      tags: [Products]
+  *      parameters:
+  *         - in: query
+  *           name: categories
+  *           required: true
+  *           description: Enter the categories ID which you want to fetch products
+  *           style: form
+  *           explode: false
+  *           type: array
+  *           items:
+  *             type: string
+  *           collectionFormat: csv
+  *      responses:
+  *          200:
+  *              description: OK 
+  *              content:
+  *                  application/json:
+  *                      schema:
+  *                          $ref: '#/components/schemas/Products'
+  *          500:
+  *              description: The category with the given ID was not found.
+  */
+ 
+ // get only specific categories of product insted of whole product list 
 router.get(`/`, async (req, res) =>{
     let filter = {}; // emty oblect to hold categories 
     // req.query.categories -> queries send by ?name=value in url
@@ -133,23 +161,23 @@ router.get(`/`, async (req, res) =>{
     } 
     res.send(productList);
 })
-    
+
 /**
  * @openapi
- * /e-shopping/products/{Category-Id}:
+ * /e-shopping/products/{Product-Id}:
  *   get:
- *      summary: Get the categories by ID 
- *      description: This api will find the items in Category Schema by given id and return category list if that id is return. As there require no authentication in fatching the cateories.So no token required
+ *      summary: Fetch product using product id  
+ *      description: This api will find the items in Product Schema by given id and return Product list of that perticular product. As there require no authentication in fatching the Product by id.So no token required
  *      tags: [Products]
  *      parameters:
  *         - in: path
- *           name: Category-Id
+ *           name: Product-Id
  *           required: true
  *           description: Enter the categories ID which you want to fetch products
  *           schema:
  *              type: string
  *              example:
- *                  Id: category-Id1,category-Id2,...
+ *                  Id: Enter Product-id
  *              allowReserved: true
  *      responses:
  *          200:
@@ -162,7 +190,7 @@ router.get(`/`, async (req, res) =>{
  *              description: The category with the given ID was not found.
  */
 router.get(`/:id`, async (req, res) =>{
-    const product = await Product.findById(req.params.id).then(product => {
+    await Product.findById(req.params.id).then(product => {
         if(!product) {
             res.status(500).json({success: false, error: "The category with the given ID was not found"})
         } 

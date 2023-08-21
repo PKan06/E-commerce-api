@@ -47,6 +47,10 @@ const options = {
             {
                 url: "http://localhost:5000" ,
                 description: 'Development server'
+            },
+            {
+                url: "https://e-commerce-api-nu.vercel.app" ,
+                description: 'Vercel Deplyoment server'
             }
         ]
     },

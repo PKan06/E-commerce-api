@@ -36,6 +36,81 @@ const storage = multer.diskStorage({
   
 const uploadOptions = multer({ storage: storage })
 
+/**
+ * @openapi
+ * components:
+ *   schemas:
+ *     Products:
+ *       type: object
+ *       required:
+ *         - name
+ *         - description
+ *         - richDescription
+ *         - category
+ *         - countInStock
+ *       properties:
+ *         _id:
+ *           type: string
+ *           description: The auto-generated id of the User
+ *         name:
+ *           type: string
+ *           description: The name of Product
+ *         description:
+ *           type: string
+ *           description: The crisp description of Product
+ *         richDescription:
+ *           type: string
+ *           description: The long discription of Product
+ *         Image:
+ *           type: string
+ *           description: The single image to show when displaying all Product in ui
+ *         images:
+ *           type: string
+ *           description: The multiple images to show when displaying the details of current Product in ui
+ *         brand:
+ *           type: string
+ *           description: The brand name of Product
+ *         price:
+ *           type: string
+ *           description: The price of Product
+ *         category:
+ *           type: string
+ *           description: The category of Product
+ *         countInStock:
+ *           type: string
+ *           description: The count of Product in stock (0-255)
+ *         rating:
+ *           type: string
+ *           description: The rating of Product
+ *         isFeatured:
+ *           type: string
+ *           description: To display the product as fetured in ui
+ *         dateCreated:
+ *           type: string
+ *           description: The date at which Product is been added to to ui
+ *       example:
+ *          name: user-name
+ *          description: user-email 
+ *          richDescription: user-password
+ *          Image: user-phoneno
+ *          images: true/false
+ *          brand: user-address
+ *          price: user-house-no 
+ *          category: user-zip-code
+ *          countInStock: user-city 
+ *          rating: user-city 
+ *          isFeatured: user-city 
+ *          dateCreated: user-country 
+ */
+
+/**
+  * @swagger
+  * tags:
+  *   name: Products
+  *   description: The products API
+  */
+
+ 
 // get only specific categories of product insted of whole product list 
 router.get(`/`, async (req, res) =>{
     let filter = {}; // emty oblect to hold categories 
@@ -44,27 +119,59 @@ router.get(`/`, async (req, res) =>{
     {
         // appending the categories to filter 
         // with wich Model.find(filter) will get the products from schema
-         filter = {category: req.query.categories.split(',')}
+        filter = {category: req.query.categories.split(',')}
     }
+    
     // this will combine the Product list with the categories id table and 
     // fetch it in this json responce
     const productList = await Product.find(filter).populate('category').catch(err => {
         console.log(err);
     });
-
+    
     if(!productList) {
         res.status(500).json({success: false})
     } 
     res.send(productList);
 })
-
+    
+/**
+ * @openapi
+ * /e-shopping/products/{Category-Id}:
+ *   get:
+ *      summary: Get the categories by ID 
+ *      description: This api will find the items in Category Schema by given id and return category list if that id is return. As there require no authentication in fatching the cateories.So no token required
+ *      tags: [Products]
+ *      parameters:
+ *         - in: path
+ *           name: Category-Id
+ *           required: true
+ *           description: Enter the categories ID which you want to fetch products
+ *           schema:
+ *              type: string
+ *              example:
+ *                  Id: category-Id1,category-Id2,...
+ *              allowReserved: true
+ *      responses:
+ *          200:
+ *              description: OK 
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/Products'
+ *          500:
+ *              description: The category with the given ID was not found.
+ */
 router.get(`/:id`, async (req, res) =>{
-    const product = await Product.findById(req.params.id);
-
-    if(!product) {
-        res.status(500).json({success: false})
-    } 
-    res.send(product);
+    const product = await Product.findById(req.params.id).then(product => {
+        if(!product) {
+            res.status(500).json({success: false, error: "The category with the given ID was not found"})
+        } 
+        else{
+            res.status(200).send(product);
+        }
+    }).catch(err => {
+        res.status(500).json({success: false, err : err})
+    });
 })
 
 // 'Image' -> feild name send from the front end 

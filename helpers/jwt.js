@@ -17,6 +17,7 @@ function authJwt() {
             {url: /\/e-shopping\/orders(.*)/,methods: ['GET', 'OPTIONS', 'POST']},  // open urls only GET, POST
             `${api}/users/login`, // this will allow user to genreate auth-token for its validation  
             `${api}/users/register`, // this will allow user to register their credentials in db
+            `${api}/users/:id`, 
         ]
     })
 }

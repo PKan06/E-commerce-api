@@ -72,5 +72,5 @@ POST     /e-shopping/users/login
 
 
 ```
-coming soon
+visit my swagger docs for E-Commerce Web API: 
 ```

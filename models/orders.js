@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
 
 const orderSchema = mongoose.Schema({
-    orderItems: [{
+    Cart: [{
+        // arrays of order ids 
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'OrderItem',
+        ref: 'CartItem', // all the orderd items from table cart table  
         required:true
     }],
     shippingAddress1: {

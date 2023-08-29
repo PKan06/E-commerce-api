@@ -77,6 +77,7 @@ app.options('*', cors())
 app.use(bodyParser.json()); // send by user {Post}
 app.use(morgan('tiny'));
 app.use(authJwt()); // this middelware will check the user authentication 
+app.use("/Public/uploads",express.static(__dirname + "/Public/uploads")) // allowing the images that will be shown to coustomer
 app.use(errorHandler); // handel the error in authorizing by middelware
 
 
@@ -97,5 +98,5 @@ app.use(`${api}/orders`, OrdersRoutes);
 
 //server
 app.listen(5000,()=>{
-    console.log('server is running http://localhost:5000');
+    console.log('server is running http://localhost:5000/api-docs');
 })

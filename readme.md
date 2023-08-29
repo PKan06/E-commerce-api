@@ -1,10 +1,8 @@
-
 # The Complete E-Commerce Web API
 
-
 # Introduction
-This repository contains NodeJs backend routes for the E-Commerce Web API
 
+This repository contains NodeJs backend routes for the E-Commerce Web API
 
 # Getting started
 
@@ -55,7 +53,7 @@ GET users count: /e-shopping/users/get/count (only admin allowed)
 #### Register new user
 
 ```
-POST     /e-shopping/users/register
+POST     /e-shopping/users/register (register yourself)
 ```
 
 #### Login user
@@ -63,14 +61,11 @@ POST     /e-shopping/users/register
 To login the user and get the auth token (required to identify the allowed admin ) you can use:
 
 ```
-POST     /e-shopping/users/login
+POST     /e-shopping/users/login (generate token for authentication)
 ```
 
-
-
-## Detail description 
-
+## Detail description
 
 ```
-visit my swagger detail docs for E-Commerce Web API: https://e-commerce-api-nu.vercel.app/api-docs/
+Visit my swagger detail docs for E-Commerce Web API: https://e-commerce-api-nu.vercel.app/api-docs/
 ```

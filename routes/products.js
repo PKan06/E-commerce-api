@@ -328,8 +328,7 @@ router.get(`/get/featured/:count`, async (req, res) =>{
 
 // updating the gallery for other files 
 // only rout havinf url gallery-images & Product id
-router.put(
-    '/gallery-images/:id', 
+router.put('/gallery-images/:id', 
     uploadOptions.array('images', 10), // allowed maximum files at a time 
     async (req, res)=> {
         if(!mongoose.isValidObjectId(req.params.id)) {
